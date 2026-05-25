@@ -113,5 +113,30 @@ Execute Phase 1 tasks as defined in `initial.md` to set up the database schema a
 Read initial.md and execute Phase 1. Do not begin Phase 2 until I confirm success criteria are met
 ```
 Output: Cline executes Phase 1, creating the database schema and seed data scripts as per the instructions in `initial.md`. After completion, Cline lists the success criteria for Phase 1 and I verify them manually using MySQL Workbench before confirming to proceed to Phase 2.
+
 Issue: Cline fails to execute MySQL commands due to MySQL not being in the system PATH, I had to intervene manually to add the MySQL bin folder to the system PATH before Cline could
+---
+## Create a new task for phase 2
+
+### Goal
+Execute Phase 2 tasks as defined in `initial.md` tos set up the backend API routes and controllers.
+
+### Prompt 7 - Starting with phase 2 - backend
+```markdown
+Read initial.md in full. Phase 1 is complete and verified — the database exists with all 13 tables and seed data. Execute Phase 2 as defined in initial.md. Build the complete backend in this order: server setup and middleware first, then utilities, then models, then controllers, then routes. Do not begin Phase 3 until I confirm the Phase 2 success criteria are met.
+```
+Output: Cline executes Phase 2, generating the backend code according to the structures and standards defined in `initial.md`. After completion, Cline lists the success criteria for Phase 2 and I verify them manually using Postman to test the API endpoints before confirming to proceed to Phase 3.
+
+Issue: Cline kept generating explanations and justifications for code choices instead of just generating code, which slowed down progress significantly. I had to prompt Cline multiple times to stop explaining and just generate code, which is a critical issue to address in future iterations for better efficiency under time constraints.
+
+Another issue: Cline generated code that referenced environment variables for database credentials, which were not defined in `initial.md` which prevented the AI from successfully generating working code. I had to clarify that the database password should be an empty string and that no .env file should be used, which is a critical architectural decision that should have been defined in `initial.md` to avoid this issue.
+---
+
+
+### Prompt 8 - constraingt on explanations during code generation
+```markdown
+Do not read any .env files or reference any credentials. Generate files in this exact order, one file at a time, no explanations, no comments in code: 1) category.model.js 2) cart.model.js 3) order.model.js 4) auth.controller.js 5) user.controller.js 6) product.controller.js 7) category.controller.js 8) cart.controller.js 9) order.controller.js 10) auth.routes.js 11) user.routes.js 12) product.routes.js 13) category.routes.js 14) cart.routes.js 15) order.routes.js 16) routes/index.js 17) server.js. Start with category.model.js now.
+```
+
+
 
