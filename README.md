@@ -20,6 +20,7 @@ Brief one-paragraph description of what was built and the tech stack.
 | MySQL not in system PATH | Cline couldn't execute terminal commands | Added MySQL bin folder to system PATH manually |
 | Phase 3 time constraintPhase 3 time constraint | AI cannot prioritize business value over completeness | Manually reduced scope to 6 core pages covering the required user journey |
 | The AI kept explaining and justifying its code choices instead of just generating code | When in time constaints, the AI should focus on code generation and skip explanations | I had to prompt the AI multiple times to stop explaining and just generate code, which slowed down progress significantly |
+| The AI generated code had some flaws | Inconsistent assumptions throughout the coding process | I had to help the AI understand the flaws and guide it to fix them, which took additional time and effort |
 
 ---
 

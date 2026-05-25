@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/order.controller');
-const { protect, restrictTo } = require('../middleware/auth');
+const { protect } = require('../middleware/auth');
 const { validate } = require('../middleware/validation');
 const orderValidator = require('../validators/order.validator');
 

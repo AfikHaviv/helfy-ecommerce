@@ -135,8 +135,40 @@ Another issue: Cline generated code that referenced environment variables for da
 
 ### Prompt 8 - constraingt on explanations during code generation
 ```markdown
-Do not read any .env files or reference any credentials. Generate files in this exact order, one file at a time, no explanations, no comments in code: 1) category.model.js 2) cart.model.js 3) order.model.js 4) auth.controller.js 5) user.controller.js 6) product.controller.js 7) category.controller.js 8) cart.controller.js 9) order.controller.js 10) auth.routes.js 11) user.routes.js 12) product.routes.js 13) category.routes.js 14) cart.routes.js 15) order.routes.js 16) routes/index.js 17) server.js. Start with category.model.js now.
+Read initial.md. Models layer is complete. Generate the controllers layer only — all 6 controller files (auth, user, product, category, cart, order). Do not touch any existing files. Do not generate models, routes, or server.js. Do not explain anything, just write the code. When controllers are done, stop and wait.
 ```
+
+## Create a new task for phase 3
+### Goal
+Execute Phase 3 tasks as defined in `initial.md` to set up the frontend React application.
+
+### Prompt 9 - Starting with phase 3 - frontend
+```markdown
+Read initial.md. Backend is complete. Execute Phase 3 but with reduced scope — implement only these pages in this exact order: Login, Signup, Products, ProductDetail, Cart, Checkout. Skip Account, OrderHistory, OrderDetail, OrderConfirmation, and NotFound. Build the full component tree, contexts, and API layer first, then pages. UI must look premium using Tailwind and Framer Motion. Stop when Checkout is complete.
+```
+
+Output: Cline executes Phase 3 with the reduced scope, generating the frontend code according to the structures and standards defined in `initial.md`. Due to time constraints, I had to manually reduce the scope of Phase 3 to focus on core features, which is a critical decision that the AI cannot make on its own based on business value, and should be defined in `initial.md` for future iterations.
+
+
+## Create a new task for phase 4 - Testing & Final Touches
+
+### Goal 
+Execute tasks to perform testing, bug fixes, and final adjustments to the application.
+
+### Prompt 10 - Phase 4 - Testing & Final Touches
+```markdown
+Read initial.md. All 3 phases are complete. Do not generate any new files. Perform a full diagnostic check in this exact order: Verify all files in the folder structure defined in initial.md exist on disk Check all import statements across controllers, routes, and models for consistency — flag any mismatches Check that server.js registers all middleware and mounts all routes correctly Check that all protected routes use the protect middleware and admin routes use authorize Check that all controllers use asyncHandler and throw ApiError correctly Check that the frontend axios instance points to the correct backend URL Check that all frontend API service files match the backend route definitions in initial.md Check that AuthContext and CartContext are correctly wrapped in App.jsx Check that all protected frontend routes use ProtectedRoute For each check report: ✅ if correct, ❌ if broken, and the exact fix needed. Do not fix anything yet — only report.
+```
+
+Output: Cline performs the diagnostic checks and reports the results in a clear format, indicating which areas are correct and which are broken, along with the exact fixes needed for any issues found. I then review the report and decide which fixes to implement manually based on the severity and time constraints.
+
+### Prompt 11 - Implementing critical fixes
+```markdown
+Read the @/DIAGNOSTIC_REPORT.md and make the critical fixes, the must fixes and the shopuld fixes. ignore the missing frontend pages for now.
+```
+
+Output: Cline implements the critical fixes as defined in the diagnostic report, improving the overall functionality and stability of the application. I then perform a final round of testing to verify that the critical issues have been resolved before considering the project complete.
+
 
 
 
