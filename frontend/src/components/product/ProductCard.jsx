@@ -16,8 +16,9 @@ const ProductCard = ({ product }) => {
     setAdding(false);
   };
 
-  const primaryImage = product.images?.find(img => img.is_primary)?.image_url || 
-                       product.images?.[0]?.image_url || 
+  const primaryImage = product.images?.find(img => img.is_primary)?.image_url ||
+                       product.images?.[0]?.image_url ||
+                       product.primary_image ||
                        'https://via.placeholder.com/300x300?text=No+Image';
 
   return (

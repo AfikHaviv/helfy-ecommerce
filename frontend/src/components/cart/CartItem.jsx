@@ -20,9 +20,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
     await onRemove(item.id);
   };
 
-  const primaryImage = item.product?.images?.find(img => img.is_primary)?.image_url ||
-                       item.product?.images?.[0]?.image_url ||
-                       'https://via.placeholder.com/150x150?text=No+Image';
+  const primaryImage = item.image_url || 'https://via.placeholder.com/150x150?text=No+Image';
 
   return (
     <motion.div
@@ -32,10 +30,10 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
       className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-4"
     >
       {/* Product Image */}
-      <Link to={`/products/${item.product?.slug}`} className="flex-shrink-0">
+      <Link to={`/products/${item.slug}`} className="flex-shrink-0">
         <img
           src={primaryImage}
-          alt={item.product?.name}
+          alt={item.name}
           className="w-24 h-24 object-cover rounded-lg"
         />
       </Link>
@@ -43,10 +41,10 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
       {/* Product Info */}
       <div className="flex-1 min-w-0">
         <Link
-          to={`/products/${item.product?.slug}`}
+          to={`/products/${item.slug}`}
           className="text-lg font-semibold text-gray-900 hover:text-primary-600 transition-colors block truncate"
         >
-          {item.product?.name}
+          {item.name}
         </Link>
         <p className="text-sm text-gray-600 mt-1">
           Price: {formatCurrency(item.price_at_addition)}
@@ -67,7 +65,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
         </span>
         <button
           onClick={() => handleQuantityChange(item.quantity + 1)}
-          disabled={updating || item.quantity >= (item.product?.stock_quantity || 999)}
+          disabled={updating || item.quantity >= (item.stock_quantity || 999)}
           className="w-8 h-8 rounded-md border border-gray-300 flex items-center justify-center hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           +

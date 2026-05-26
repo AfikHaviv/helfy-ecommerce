@@ -10,6 +10,13 @@ const createProductSchema = Joi.object({
       'string.max': 'Product name cannot exceed 255 characters',
       'any.required': 'Product name is required'
     }),
+  slug: Joi.string()
+    .max(255)
+    .optional()
+    .allow('', null)
+    .messages({
+      'string.max': 'Slug cannot exceed 255 characters'
+    }),
   description: Joi.string()
     .min(10)
     .required()
@@ -111,6 +118,13 @@ const updateProductSchema = Joi.object({
     .messages({
       'string.min': 'Product name must be at least 3 characters long',
       'string.max': 'Product name cannot exceed 255 characters'
+    }),
+  slug: Joi.string()
+    .max(255)
+    .optional()
+    .allow('', null)
+    .messages({
+      'string.max': 'Slug cannot exceed 255 characters'
     }),
   description: Joi.string()
     .min(10)
@@ -279,9 +293,9 @@ const slugParamSchema = Joi.object({
 });
 
 module.exports = {
-  createProductSchema,
-  updateProductSchema,
-  productQuerySchema,
-  idParamSchema,
-  slugParamSchema
+  createProduct: createProductSchema,
+  updateProduct: updateProductSchema,
+  productQuery: productQuerySchema,
+  idParam: idParamSchema,
+  slugParam: slugParamSchema
 };

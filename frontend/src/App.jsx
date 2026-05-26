@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -8,12 +8,14 @@ import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 
 // Pages
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import Account from './pages/Account';
 import Profile from './pages/Profile';
 import OrderHistory from './pages/OrderHistory';
 import OrderDetail from './pages/OrderDetail';
@@ -31,7 +33,7 @@ function App() {
               <main className="flex-grow">
                 <Routes>
                   {/* Public Routes */}
-                  <Route path="/" element={<Navigate to="/products" replace />} />
+                  <Route path="/" element={<Home />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/products" element={<Products />} />
@@ -52,6 +54,14 @@ function App() {
                     element={
                       <ProtectedRoute>
                         <OrderConfirmation />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/account"
+                    element={
+                      <ProtectedRoute>
+                        <Account />
                       </ProtectedRoute>
                     }
                   />

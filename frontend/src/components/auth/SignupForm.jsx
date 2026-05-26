@@ -43,15 +43,16 @@ const SignupForm = () => {
 
     setLoading(true);
 
-    try {
-      const { confirmPassword, ...signupData } = formData;
-      await signup(signupData);
+    const { confirmPassword, ...signupData } = formData;
+    const result = await signup(signupData);
+
+    if (result.success) {
       navigate('/products');
-    } catch (err) {
-      setError(err.message || 'Failed to create account');
-    } finally {
-      setLoading(false);
+    } else {
+      setError(result.message || 'Failed to create account');
     }
+
+    setLoading(false);
   };
 
   return (

@@ -139,14 +139,14 @@ const CategoryModel = {
     const total = countResult[0].total;
 
     const [products] = await pool.execute(
-      `SELECT DISTINCT p.*, 
+      `SELECT DISTINCT p.*,
         (SELECT image_url FROM product_images WHERE product_id = p.id AND is_primary = TRUE LIMIT 1) as primary_image
        FROM products p
        INNER JOIN product_categories pc ON p.id = pc.product_id
        WHERE pc.category_id = ? AND p.is_active = TRUE
        ORDER BY ${orderBy}
-       LIMIT ? OFFSET ?`,
-      [categoryId, limit, offset]
+       LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`,
+      [categoryId]
     );
 
     return { products, total };

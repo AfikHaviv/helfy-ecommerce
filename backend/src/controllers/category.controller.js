@@ -108,14 +108,14 @@ const getCategoryProducts = asyncHandler(async (req, res) => {
 
   // Get products
   const [products] = await pool.execute(
-    `SELECT DISTINCT p.*, 
+    `SELECT DISTINCT p.*,
       (SELECT image_url FROM product_images WHERE product_id = p.id AND is_primary = TRUE LIMIT 1) as primary_image
      FROM products p
      INNER JOIN product_categories pc ON p.id = pc.product_id
      WHERE pc.category_id = ? AND p.is_active = TRUE
      ORDER BY ${orderBy}
-     LIMIT ? OFFSET ?`,
-    [id, parseInt(limit), offset]
+     LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`,
+    [id]
   );
 
   const pagination = {

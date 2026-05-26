@@ -2,6 +2,7 @@ const asyncHandler = require('../utils/asyncHandler');
 const ApiError = require('../utils/ApiError');
 const ApiResponse = require('../utils/ApiResponse');
 const ProductModel = require('../models/product.model');
+const { slugify } = require('../utils/helpers');
 
 /**
  * @desc    Get all products with filters and pagination
@@ -123,15 +124,17 @@ const createProduct = asyncHandler(async (req, res) => {
     category_ids
   } = req.body;
 
+  const productSlug = slug || slugify(name);
+
   // Check if slug already exists
-  const existingProduct = await ProductModel.findBySlug(slug);
+  const existingProduct = await ProductModel.findBySlug(productSlug);
   if (existingProduct) {
     throw ApiError.conflict('Product with this slug already exists', 'SLUG_EXISTS');
   }
 
   const productId = await ProductModel.create({
     name,
-    slug,
+    slug: productSlug,
     description,
     short_description,
     price,

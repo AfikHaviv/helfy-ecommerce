@@ -74,8 +74,8 @@ const OrderModel = {
     const total = countResult[0].total;
 
     const [orders] = await pool.execute(
-      `SELECT * FROM orders WHERE ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
-      [...params, limit, offset]
+      `SELECT * FROM orders WHERE ${whereClause} ORDER BY created_at DESC LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`,
+      params
     );
 
     return { orders, total };
@@ -112,8 +112,8 @@ const OrderModel = {
     const total = countResult[0].total;
 
     const [orders] = await pool.execute(
-      `SELECT * FROM orders ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
-      [...params, limit, offset]
+      `SELECT * FROM orders ${whereClause} ORDER BY created_at DESC LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`,
+      params
     );
 
     return { orders, total };

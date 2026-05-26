@@ -49,7 +49,7 @@ const idParamSchema = Joi.object({
 });
 
 module.exports = {
-  addToCartSchema,
-  updateCartItemSchema,
-  idParamSchema
+  addToCart: addToCartSchema,
+  updateCartItem: updateCartItemSchema,
+  idParam: idParamSchema
 };

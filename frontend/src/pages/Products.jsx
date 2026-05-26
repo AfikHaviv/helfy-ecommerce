@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { useSearchParams } from 'react-router-dom';
 import ProductGrid from '../components/product/ProductGrid';
 import ProductFilter from '../components/product/ProductFilter';
 import ProductSearch from '../components/product/ProductSearch';
@@ -7,16 +8,17 @@ import { productAPI } from '../api/product.api';
 import { categoryAPI } from '../api/category.api';
 
 const Products = () => {
+  const [searchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
-    search: '',
-    category: '',
-    minPrice: '',
-    maxPrice: '',
-    sort: '',
-    inStock: false,
+    search: searchParams.get('search') || '',
+    category: searchParams.get('category') || '',
+    minPrice: searchParams.get('minPrice') || '',
+    maxPrice: searchParams.get('maxPrice') || '',
+    sort: searchParams.get('sort') || '',
+    inStock: searchParams.get('inStock') === 'true',
     page: 1,
     limit: 12,
   });
@@ -34,7 +36,7 @@ const Products = () => {
     try {
       const response = await categoryAPI.getCategories();
       if (response.success) {
-        setCategories(response.data || []);
+        setCategories(response.data?.categories || []);
       }
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -88,13 +90,9 @@ const Products = () => {
     }
   };
 
-  const handleSearchChange = (value) => {
-    setFilters({
-      ...filters,
-      search: value,
-      page: 1,
-    });
-  };
+  const handleSearchChange = useCallback((value) => {
+    setFilters(prev => ({ ...prev, search: value, page: 1 }));
+  }, []);
 
   const handlePageChange = (newPage) => {
     setFilters({

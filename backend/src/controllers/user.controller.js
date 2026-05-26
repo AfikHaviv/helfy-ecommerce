@@ -47,7 +47,7 @@ const updateProfile = asyncHandler(async (req, res) => {
  * @access  Private
  */
 const updatePassword = asyncHandler(async (req, res) => {
-  const { currentPassword, newPassword } = req.body;
+  const { current_password, new_password } = req.body;
 
   // Get user with password
   const user = await UserModel.findByEmail(req.user.email);
@@ -57,13 +57,13 @@ const updatePassword = asyncHandler(async (req, res) => {
   }
 
   // Verify current password
-  const isPasswordValid = await UserModel.verifyPassword(currentPassword, user.password_hash);
+  const isPasswordValid = await UserModel.verifyPassword(current_password, user.password_hash);
   if (!isPasswordValid) {
     throw ApiError.unauthorized('Current password is incorrect', 'INVALID_PASSWORD');
   }
 
   // Update password
-  await UserModel.updatePassword(req.user.id, newPassword);
+  await UserModel.updatePassword(req.user.id, new_password);
 
   ApiResponse.success(res, null, 'Password updated successfully');
 });

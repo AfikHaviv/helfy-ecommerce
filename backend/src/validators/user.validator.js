@@ -137,8 +137,9 @@ const idParamSchema = Joi.object({
 });
 
 module.exports = {
-  updateProfileSchema,
-  changePasswordSchema,
-  addressSchema,
-  idParamSchema
+  updateProfile: updateProfileSchema,
+  updatePassword: changePasswordSchema,
+  createAddress: addressSchema,
+  updateAddress: addressSchema,
+  idParam: idParamSchema
 };

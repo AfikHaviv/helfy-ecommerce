@@ -27,8 +27,8 @@ const ProductDetail = () => {
     try {
       setLoading(true);
       const response = await productAPI.getProductBySlug(slug);
-      if (response.success && response.data) {
-        setProduct(response.data);
+      if (response.success && response.data?.product) {
+        setProduct(response.data.product);
       } else {
         setError('Product not found');
       }
@@ -158,7 +158,7 @@ const ProductDetail = () => {
                     ))}
                   </div>
                   <span className="ml-2 text-sm text-gray-600">
-                    {product.rating_average.toFixed(1)} ({product.rating_count} reviews)
+                    {parseFloat(product.rating_average).toFixed(1)} ({product.rating_count} reviews)
                   </span>
                 </div>
               )}

@@ -45,8 +45,8 @@ export const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     try {
       const response = await authAPI.getMe();
-      if (response.success && response.data) {
-        dispatch({ type: 'SET_USER', payload: response.data });
+      if (response.success && response.data?.user) {
+        dispatch({ type: 'SET_USER', payload: response.data.user });
       } else {
         dispatch({ type: 'SET_LOADING', payload: false });
       }

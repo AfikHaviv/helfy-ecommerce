@@ -5,9 +5,12 @@ const ProductSearch = ({ value, onChange }) => {
   const [searchTerm, setSearchTerm] = React.useState(value || '');
   const debouncedSearch = useDebounce(searchTerm, 500);
 
+  const onChangeRef = React.useRef(onChange);
+  onChangeRef.current = onChange;
+
   React.useEffect(() => {
-    onChange(debouncedSearch);
-  }, [debouncedSearch, onChange]);
+    onChangeRef.current(debouncedSearch);
+  }, [debouncedSearch]);
 
   return (
     <div className="relative">

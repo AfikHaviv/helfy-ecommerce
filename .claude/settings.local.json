@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"c:\\\\Users\\\\AfikHaviv\\\\Desktop\\\\Projects\\\\Helfy_eCommerce\\\\frontend\\\\src\" -Recurse | Where-Object { $_.PSIsContainer } | Select-Object -ExpandProperty FullName)",
+      "PowerShell(Invoke-RestMethod -Uri \"http://localhost:5000/api/products?limit=3\" -Method GET)"
+    ]
+  }
+}

@@ -96,7 +96,7 @@ const Checkout = () => {
 
       if (response.success && response.data) {
         await clearCart();
-        navigate(`/order-confirmation/${response.data.id}`);
+        navigate(`/order-confirmation/${response.data.order.id}`);
       } else {
         setError('Failed to place order. Please try again.');
       }

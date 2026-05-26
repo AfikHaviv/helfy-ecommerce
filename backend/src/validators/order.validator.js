@@ -138,8 +138,8 @@ const idParamSchema = Joi.object({
 });
 
 module.exports = {
-  createOrderSchema,
-  updateOrderStatusSchema,
-  orderQuerySchema,
-  idParamSchema
+  createOrder: createOrderSchema,
+  updateOrderStatus: updateOrderStatusSchema,
+  orderQuery: orderQuerySchema,
+  idParam: idParamSchema
 };

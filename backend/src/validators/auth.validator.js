@@ -85,8 +85,8 @@ const resetPasswordSchema = Joi.object({
 });
 
 module.exports = {
-  signupSchema,
-  loginSchema,
-  forgotPasswordSchema,
-  resetPasswordSchema
+  signup: signupSchema,
+  login: loginSchema,
+  forgotPassword: forgotPasswordSchema,
+  resetPassword: resetPasswordSchema
 };

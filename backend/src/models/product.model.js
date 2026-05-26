@@ -87,15 +87,15 @@ const ProductModel = {
     );
     const total = countResult[0].total;
 
-    // Get products
+    // Get products (LIMIT/OFFSET interpolated directly — values are already parseInt'd in the controller)
     const [products] = await pool.execute(
-      `SELECT p.*, 
+      `SELECT p.*,
         (SELECT image_url FROM product_images WHERE product_id = p.id AND is_primary = TRUE LIMIT 1) as primary_image
-       FROM products p 
+       FROM products p
        ${whereClause}
        ORDER BY ${orderBy}
-       LIMIT ? OFFSET ?`,
-      [...params, limit, offset]
+       LIMIT ${limit} OFFSET ${offset}`,
+      params
     );
 
     return { products, total };
@@ -106,13 +106,13 @@ const ProductModel = {
    */
   async findFeatured(limit = 10) {
     const [products] = await pool.execute(
-      `SELECT p.*, 
+      `SELECT p.*,
         (SELECT image_url FROM product_images WHERE product_id = p.id AND is_primary = TRUE LIMIT 1) as primary_image
-       FROM products p 
+       FROM products p
        WHERE p.is_active = TRUE AND p.is_featured = TRUE
        ORDER BY p.created_at DESC
-       LIMIT ?`,
-      [limit]
+       LIMIT ${parseInt(limit)}`,
+      []
     );
 
     return products;
