@@ -40,7 +40,6 @@ The AI preformed well in generating code based on clear instructions, but strugg
 ```bash
 git clone https://github.com/AfikHaviv/helfy-ecommerce.git
 cd helfy-ecommerce
-cp .env.example .env ## Set your database credentials in the .env file
 docker compose up --build
 
 ```
