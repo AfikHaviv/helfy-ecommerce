@@ -38,22 +38,12 @@ The AI preformed well in generating code based on clear instructions, but strugg
 
 ### Setup
 ```bash
-# Database
-cd backend
-node src/scripts/createDatabase.js
-node src/scripts/createTables.js
-node src/scripts/seedData.js
+git clone https://github.com/AfikHaviv/helfy-ecommerce.git
+cd helfy-ecommerce
+cp .env.example .env ## Set your database credentials in the .env file
+docker compose up --build
 
-# Backend
-npm install
-npm run dev
-
-# Frontend
-cd frontend
-npm install
-npm start
 ```
 
 ### Test Credentials
-- **Admin**: admin@helfy.com / Admin123!
-- **Customer**: customer1@helfy.com / Customer123!
+- **Admin**: admin@helfy.com / Password123!
