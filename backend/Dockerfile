@@ -7,6 +7,7 @@ RUN npm ci --omit=dev
 
 COPY src/ ./src/
 COPY entrypoint.sh ./
+RUN sed -i 's/\r//' ./entrypoint.sh
 RUN chmod +x entrypoint.sh
 
 EXPOSE 5000
