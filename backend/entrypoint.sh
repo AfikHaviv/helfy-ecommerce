@@ -3,9 +3,9 @@ set -e
 
 echo "Checking database initialization state..."
 
-# Check the products table so that a partial seed (users inserted, products failed)
-# is detected correctly and seeding is retried on restart.
-# The connection is always closed (try and catch) to avoid the Node process hanging.
+# Returns the product count, or "missing" if the table doesn't exist yet.
+# The connection is always closed (in both try and catch) so the Node process
+# never hangs due to an open socket keeping the event loop alive.
 PRODUCT_COUNT=$(node -e "
 const mysql = require('mysql2/promise');
 (async () => {
@@ -23,17 +23,22 @@ const mysql = require('mysql2/promise');
     await conn.end();
   } catch (e) {
     if (conn) await conn.end().catch(() => {});
-    console.log('0');
+    console.log('missing');
   }
 })();
 ")
 
-if [ "$PRODUCT_COUNT" = "0" ]; then
-  echo "No products found — running seed..."
+if [ "$PRODUCT_COUNT" = "missing" ]; then
+  echo "Schema not found — creating tables and seeding data..."
+  node src/scripts/createTables.js
+  node src/scripts/seedData.js
+  echo "Database initialised and seeded."
+elif [ "$PRODUCT_COUNT" = "0" ]; then
+  echo "Tables exist but no products — seeding data..."
   node src/scripts/seedData.js
   echo "Database seeded."
 else
-  echo "Database already seeded ($PRODUCT_COUNT products) — skipping."
+  echo "Database already has $PRODUCT_COUNT products — skipping seed."
 fi
 
 exec node src/server.js
