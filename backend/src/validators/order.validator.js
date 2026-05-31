@@ -65,16 +65,17 @@ const createOrderSchema = Joi.object({
       }),
     phone: Joi.string()
       .pattern(/^[0-9+\-\s()]+$/)
-      .min(10)
+      .min(7)
       .max(20)
       .required()
       .messages({
         'string.pattern.base': 'Please provide a valid phone number',
+        'string.min': 'Phone number must be at least 7 characters long',
         'any.required': 'Phone is required'
       })
   }).required(),
   payment_method: Joi.string()
-    .valid('credit_card', 'paypal', 'cash_on_delivery')
+    .valid('credit_card', 'debit_card', 'paypal', 'cash_on_delivery')
     .required()
     .messages({
       'any.only': 'Invalid payment method',

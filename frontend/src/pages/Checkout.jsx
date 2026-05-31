@@ -101,7 +101,12 @@ const Checkout = () => {
         setError('Failed to place order. Please try again.');
       }
     } catch (err) {
-      setError(err.message || 'Failed to place order. Please try again.');
+      const details = err.data?.error?.details;
+      if (details && details.length > 0) {
+        setError(details.map(d => d.message).join(' • '));
+      } else {
+        setError(err.message || 'Failed to place order. Please try again.');
+      }
     } finally {
       setLoading(false);
     }

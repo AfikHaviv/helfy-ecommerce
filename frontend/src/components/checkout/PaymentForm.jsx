@@ -88,7 +88,7 @@ const PaymentForm = ({ formData, onChange }) => {
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
         <p className="text-sm text-blue-800">
-          <strong>Note:</strong> This is a demo checkout. No real payment will be processed.
+          <strong>Note:</strong> This is a demo checkout. DO NOT use real payment information.
         </p>
       </div>
     </div>

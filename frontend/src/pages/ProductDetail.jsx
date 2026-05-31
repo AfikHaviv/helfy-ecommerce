@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { productAPI } from '../api/product.api';
 import { formatCurrency } from '../utils/formatters';
+import { PRODUCT_PLACEHOLDER, handleImageError } from '../utils/placeholder';
 import useCart from '../hooks/useCart';
 import Button from '../components/common/Button';
 import Loader from '../components/common/Loader';
@@ -74,7 +75,7 @@ const ProductDetail = () => {
 
   const images = product.images || [];
   const primaryImage = images.find(img => img.is_primary) || images[0];
-  const displayImage = images[selectedImage] || primaryImage || { image_url: 'https://via.placeholder.com/600x600?text=No+Image' };
+  const displayImage = images[selectedImage] || primaryImage || { image_url: PRODUCT_PLACEHOLDER };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -107,6 +108,7 @@ const ProductDetail = () => {
                   src={displayImage.image_url}
                   alt={product.name}
                   className="w-full h-[500px] object-cover"
+                  onError={handleImageError}
                 />
               </motion.div>
 
@@ -125,6 +127,7 @@ const ProductDetail = () => {
                         src={image.image_url}
                         alt={`${product.name} ${index + 1}`}
                         className="w-full h-24 object-cover"
+                        onError={handleImageError}
                       />
                     </button>
                   ))}

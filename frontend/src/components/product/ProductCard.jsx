@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { formatCurrency } from '../../utils/formatters';
+import { PRODUCT_PLACEHOLDER, handleImageError } from '../../utils/placeholder';
 import Button from '../common/Button';
 import useCart from '../../hooks/useCart';
 
@@ -19,7 +20,7 @@ const ProductCard = ({ product }) => {
   const primaryImage = product.images?.find(img => img.is_primary)?.image_url ||
                        product.images?.[0]?.image_url ||
                        product.primary_image ||
-                       'https://via.placeholder.com/300x300?text=No+Image';
+                       PRODUCT_PLACEHOLDER;
 
   return (
     <motion.div
@@ -32,6 +33,7 @@ const ProductCard = ({ product }) => {
             src={primaryImage}
             alt={product.name}
             className="w-full h-full object-cover"
+            onError={handleImageError}
           />
           {product.compare_at_price && product.compare_at_price > product.price && (
             <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-semibold">

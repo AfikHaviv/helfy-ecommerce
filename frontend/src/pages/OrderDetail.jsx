@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { orderAPI } from '../api/order.api';
 import { formatCurrency, formatDate } from '../utils/formatters';
 import { ORDER_STATUS_COLORS } from '../utils/constants';
+import { PRODUCT_PLACEHOLDER, handleImageError } from '../utils/placeholder';
 import Loader from '../components/common/Loader';
 import ErrorMessage from '../components/common/ErrorMessage';
 import Button from '../components/common/Button';
@@ -122,13 +123,14 @@ const OrderDetail = () => {
                   {(order.items || []).map((item) => {
                     const primaryImage = item.product?.images?.find(img => img.is_primary)?.image_url ||
                       item.product?.images?.[0]?.image_url ||
-                      'https://via.placeholder.com/80x80?text=No+Image';
+                      PRODUCT_PLACEHOLDER;
                     return (
                       <div key={item.id} className="flex items-center space-x-4 border-b pb-4 last:border-b-0 last:pb-0">
                         <img
                           src={primaryImage}
                           alt={item.product?.name}
                           className="w-20 h-20 object-cover rounded-lg flex-shrink-0"
+                          onError={handleImageError}
                         />
                         <div className="flex-1 min-w-0">
                           <p className="font-semibold text-gray-900 truncate">

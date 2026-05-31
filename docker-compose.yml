@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: helfy_root_pw
+      MYSQL_DATABASE: helfy_ecommerce
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-phelfy_root_pw"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: helfy_root_pw
+      DB_NAME: helfy_ecommerce
+      JWT_SECRET: change_me_in_production
+      JWT_EXPIRE: 7d
+      JWT_COOKIE_EXPIRE: 7
+      CORS_ORIGIN: http://localhost:3000
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_API_URL: /api
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+volumes:
+  mysql_data:

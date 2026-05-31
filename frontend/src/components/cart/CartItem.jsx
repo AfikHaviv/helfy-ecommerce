@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { formatCurrency } from '../../utils/formatters';
+import { PRODUCT_PLACEHOLDER, handleImageError } from '../../utils/placeholder';
 import Button from '../common/Button';
 
 const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
@@ -20,7 +21,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
     await onRemove(item.id);
   };
 
-  const primaryImage = item.image_url || 'https://via.placeholder.com/150x150?text=No+Image';
+  const primaryImage = item.image_url || PRODUCT_PLACEHOLDER;
 
   return (
     <motion.div
@@ -35,6 +36,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
           src={primaryImage}
           alt={item.name}
           className="w-24 h-24 object-cover rounded-lg"
+          onError={handleImageError}
         />
       </Link>
 
