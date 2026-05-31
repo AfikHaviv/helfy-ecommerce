@@ -8,6 +8,7 @@ services:
       MYSQL_DATABASE: helfy_ecommerce
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/01-schema.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-phelfy_root_pw"]
       interval: 5s
